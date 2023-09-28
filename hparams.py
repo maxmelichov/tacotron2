@@ -37,7 +37,7 @@ def create_hparams(hparams_string=None, verbose=False):
         "training_files":'',
         "validation_files":'',
 
-        "text_cleaners":['english_cleaners'],
+        "text_cleaners":['transliteration_cleaners'],#english_cleaners
 
         ################################
         # Audio Parameters             #
