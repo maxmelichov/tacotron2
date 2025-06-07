@@ -6,8 +6,10 @@ import numpy as np
 
 def save_figure_to_numpy(fig):
     # save it to a numpy array.
-    data = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-    data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
+    fig.canvas.draw()
+    buf = fig.canvas.buffer_rgba()
+    data = np.asarray(buf)
+    data = data[:, :, :3]  # Remove alpha channel, keep only RGB
     return data
 
 
