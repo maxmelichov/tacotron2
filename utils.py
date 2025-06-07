@@ -5,13 +5,14 @@ import torch
 
 def get_mask_from_lengths(lengths):
     max_len = torch.max(lengths).item()
-    ids = torch.arange(0, max_len, out=torch.cuda.LongTensor(max_len))
+    ids = torch.arange(0, max_len, dtype=torch.long, device=lengths.device)
     mask = (ids < lengths.unsqueeze(1)).bool()
     return mask
 
 
 def load_wav_to_torch(full_path):
     sampling_rate, data = read(full_path)
+    
     return torch.FloatTensor(data.astype(np.float32)), sampling_rate
 
 
@@ -26,4 +27,4 @@ def to_gpu(x):
 
     if torch.cuda.is_available():
         x = x.cuda(non_blocking=True)
-    return torch.autograd.Variable(x)
+    return x
